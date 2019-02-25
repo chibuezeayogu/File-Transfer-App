@@ -42,6 +42,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # RSpec tests rails app using BDD approach
+  gem 'rspec-rails', '~> 3.6'
+  # factory_bot_rails provides integration between factory_girl and rails
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers', '~> 3.1', require: false
+  gem 'shoulda-callback-matchers', '~> 1.1.1'
+  gem 'database_cleaner'
+  gem 'faker'
 end
 
 group :development do
