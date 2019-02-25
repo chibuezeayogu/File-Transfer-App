@@ -1,0 +1,84 @@
+version: 2
+defaults: &defaults
+  working_directory: ~/file-transfer-app
+  docker:
+    - image: circleci/ruby:2.4.1-node-browsers  # language image
+      environment:
+        BUNDLE_JOBS: 3
+        BUNDLE_RETRY: 3
+        BUNDLE_PATH: vendor/bundle
+        PGHOST: 127.0.0.1
+        PGUSER: circleci-demo-ruby
+        RAILS_ENV: test
+    - image: circleci/postgres:9.5-alpine  # service image
+      environment:
+        POSTGRES_USER: circleci-demo-ruby
+        POSTGRES_DB: rails_blog
+        POSTGRES_PASSWORD: ""
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - run:
+          name:  Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+  tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/file-transfer-app/tmp
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+      - run: 
+          name: Setup dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            bundle exec rake db:create
+            bundle exec rake db:schema:load
+      - run: 
+          name: Run api tests
+          command: |
+            bundle exec rake
+            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.test.json coverage/test/.resultset.json
+      - persist_to_workspace:
+          root: tmp
+          paths: 
+            - codeclimate.test.json
+  upload-coverage:
+    <<: *defaults
+    environment:
+      - CC_TEST_REPORTER_ID: 5290e5a37d00e879501d7ee95e185ec80b51b0212cce6c02c39726f94e5f5fad
+    steps:
+      - attach_workspace:
+          at: ~/file-transfer-app/tmp
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.test.json
+
+workflows:
+  version: 2
+
+  commit:
+    jobs:
+      - build
+      - tests:
+          requires:
+            - build
+      - upload-coverage:
+          requires:
+            - tests
+
