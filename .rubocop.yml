@@ -1,0 +1,26 @@
+inherit_from: config/default.yml
+
+AllCops:
+  RubyInterpreters:
+    - ruby
+    - macruby
+    - rake
+    - jruby
+    - rbx
+  Include:
+    - 'Rakefile'
+    - 'config.ru'
+    - 'lib/**/*.rake'
+    - '*.rb'
+    - '**/*.rb'
+    - '**/**/*.rb'
+    - '**/**/**/*.rb'
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'README.md'
+    - 'Gemfile.lock'
+    - 'node_modules/**/*'
+    - 'config/**/*'
+  UseCache: false
+  CacheRootDirectory: false
