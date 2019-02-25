@@ -50,6 +50,7 @@ group :development, :test do
   gem 'shoulda-callback-matchers', '~> 1.1.1'
   gem 'database_cleaner'
   gem 'faker'
+  gem 'simplecov', require: false, group: :test
 end
 
 group :development do
