@@ -7,17 +7,18 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item<%= 'active' if current_page?(root_path) %>">
+          <%= link_to "/", class: "nav-link text-white" do %>
+            Home<span class="sr-only">(current)</span>
+          <% end %>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">Login</a>
+        <li class="nav-item<%= 'active' if current_page?(login_path) %>">
+          <%= link_to "Login", "/login", class: "nav-link text-white" %> 
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#" >SignUp</a>
+        <li class="nav-item<%= 'active' if current_page?(register_path) %>">
+          <%= link_to "Register", "/register", class: "nav-link text-white" %>
         </li>
       </ul>
     </div>
