@@ -23,7 +23,7 @@ RSpec.describe UsersController, type: :controller do
       subject { post 'create', params: valid_params }
       it 'registers a new user' do
         subject
-        expect(response).to render_template(nil)
+        expect(response).to redirect_to root_path
         expect(response.status).to eq(302)
         expect(User.count).to eq 1
         expect(User.first.email).to eq valid_params[:email]
@@ -34,7 +34,7 @@ RSpec.describe UsersController, type: :controller do
       subject { post 'create', params: invalid_params }
       it 'returns a validation error' do
         subject
-        expect(response).to render_template(nil)
+        expect(response).to redirect_to register_path
         expect(response.status).to eq(302)
         expect(flash[:danger])
           .to match(["Password confirmation doesn't match Password", "Password confirmation can't be blank"])
