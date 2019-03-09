@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:user) do
     create(:user,
-      email: Faker::Internet.email,
-      password: "password",
-      password_confirmation: "password")
+           email: Faker::Internet.email,
+           password: 'password',
+           password_confirmation: 'password')
   end
   let(:valid_params) do
     {
@@ -23,7 +23,6 @@ RSpec.describe UsersController, type: :controller do
       password_confirmation: ''
     }
   end
-
 
   describe '#create' do
     context 'when a valid params is provided' do
@@ -65,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
         subject
         expect(response).to redirect_to login_path
         expect(response).to have_http_status(302)
-        expect(flash[:danger]).to match("Invalid login credentials")
+        expect(flash[:danger]).to match('Invalid login credentials')
       end
     end
   end
