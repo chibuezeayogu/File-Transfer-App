@@ -1,4 +1,11 @@
-<div class="container">    
+<div class="container">
+  <% if flash[:danger].present? %>
+    <% flash.each do |name, msgs| %>
+      <div style="margin-top:20px" class="alert alert-<%= name %>" role="alert">
+        <%= msgs %>
+      </div>
+    <% end %>
+  <% end %>
   <div style="margin: auto; padding-top:100px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
     <div class="panel panel-info">
       <div class="panel-heading">

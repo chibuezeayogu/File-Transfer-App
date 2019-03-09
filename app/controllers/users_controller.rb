@@ -18,7 +18,16 @@ class UsersController < ApplicationController
     end
   end
 
-  def sign_in; end
+  def sign_in
+    user = User.find_by(email: params[:email].to_s.downcase)
+
+    if user&.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect_to root_path
+    else
+      redirect_to login_path, danger: 'Invalid login credentials'
+    end
+  end
 
   private
 
