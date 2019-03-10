@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get 'login', to: 'users#new'
   post 'create', to: 'users#create'
   post 'sign_in', to: 'users#sign_in'
+  get 'destroy', to: 'users#destroy'
 end
