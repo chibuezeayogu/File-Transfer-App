@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   post 'create', to: 'users#create'
   post 'sign_in', to: 'users#sign_in'
   get 'destroy', to: 'users#destroy'
+
+  resources :documents
 end
