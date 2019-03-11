@@ -1,0 +1,36 @@
+<div class="container">
+  <div style="margin-top:100px" class="row">
+    <div class="col-md-12 text-right">
+      <%= link_to "Upload File", new_document_path, class: "btn btn-outline-secondary" %> 
+      <hr />
+      <div class="table-responsive">
+        <% if @documents.any? %>
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th><input type="checkbox" id="checkall" /></th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Uploaded_by</th>
+              <th>Date Uploaded</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" class="checkthis" /></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= link_to "Download", "/upload", class: "btn btn-outline-success" %>
+        <% else %>
+          <h4 class="text-center">Document list is empty</h4>
+        <% end %>
+      </div>
+  </div>
+</div>
