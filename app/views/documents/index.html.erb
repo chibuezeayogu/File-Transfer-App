@@ -5,27 +5,27 @@
       <hr />
       <div class="table-responsive">
         <% if @documents.any? %>
-          <table id="mytable" class="table table-bordred table-striped">
+          <table id="mytable" class="table table-bordred table-striped text-left">
             <thead>
-              <th><input type="checkbox" id="checkall" /></th>
+              <th>S/N</th>
               <th>Title</th>
               <th>Description</th>
               <th>Uploaded_by</th>
-              <th>Date Uploaded</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th>Uploaded</th>
+              <th></th>
             </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox" class="checkthis" /></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
+            <% @documents.each_with_index  do |document, index| %>
+              <tbody>
+                <tr>
+                  <td><%= index+1 %></td>
+                  <td><%= document.title %></td>
+                  <td><%= document.description %></td>
+                  <td><%= document.user.email %></td>
+                  <td><%= time_ago_in_words(document.created_at) %></td>
+                  <td><input type="checkbox" class="checkthis" /></td>
+                </tr>
+              </tbody>
+            <% end %>
           </table>
           <%= link_to "Download", "/upload", class: "btn btn-outline-success" %>
         <% else %>
