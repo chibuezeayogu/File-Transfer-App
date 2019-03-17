@@ -34,7 +34,11 @@ RSpec.describe DocumentsController, type: :controller do
     end
 
     context 'when user is logged in and visits /documents route' do
-      before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user) }
+      before do
+        allow_any_instance_of(ApplicationController)
+          .to receive(:current_user).and_return(user)
+      end
+
       subject { get :index, params: {} }
 
       it 'renders index template' do
@@ -44,8 +48,12 @@ RSpec.describe DocumentsController, type: :controller do
   end
 
   describe '#create' do
-    before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user) }
-    context 'when user is logged in and valid params is provided' do
+    before do
+      allow_any_instance_of(ApplicationController)
+        .to receive(:current_user).and_return(user)
+    end
+
+    context 'when user is logged in and provides a valid params' do
       subject { post :create, params: valid_params }
 
       it 'creates a new document' do
@@ -58,7 +66,7 @@ RSpec.describe DocumentsController, type: :controller do
       end
     end
 
-    context 'when user is logged in and invalid params is provided' do
+    context 'when a user is logged in and provides an invalid params' do
       subject { post :create, params: invalid_params }
 
       it 'redirects to new_document_path' do
@@ -69,6 +77,32 @@ RSpec.describe DocumentsController, type: :controller do
       it 'returns a validation error' do
         subject
         expect(flash[:danger]).to match(['Document is required'])
+      end
+    end
+  end
+
+  describe '#show' do
+    before do
+      allow_any_instance_of(ApplicationController)
+        .to receive(:current_user).and_return(user)
+    end
+
+    context 'when a user clicks view record button' do
+      before { post :create, params: valid_params }
+      subject { get :show, params: { id: Document.first.id } }
+
+      it 'renders show template' do
+        expect(subject).to have_http_status(200)
+        expect(subject).to render_template :show
+      end
+    end
+
+    context 'when record id is not found' do
+      subject { get :show, params: { id: 0 } }
+
+      it 'renders 404 page' do
+        expect(subject).to have_http_status(404)
+        expect(subject).to render_template(file: "#{Rails.root}/public/404.html")
       end
     end
   end

@@ -3,8 +3,8 @@
     <div class="col-md-12 text-right">
       <%= link_to "Upload File", new_document_path, class: "btn btn-outline-secondary" %> 
       <hr />
-      <div class="table-responsive">
-        <% if @documents.any? %>
+      <% if @documents.any? %>
+        <div class="table-responsive">
           <table id="mytable" class="table table-bordred table-striped text-left">
             <thead>
               <th>S/N</th>
@@ -12,6 +12,7 @@
               <th>Description</th>
               <th>Uploaded_by</th>
               <th>Uploaded</th>
+              <th></th>
               <th></th>
             </thead>
             <% @documents.each_with_index  do |document, index| %>
@@ -22,15 +23,16 @@
                   <td><%= document.description %></td>
                   <td><%= document.user.email %></td>
                   <td><%= time_ago_in_words(document.created_at) %></td>
+                  <td><%= link_to "view", document_path(document), class: "btn btn-outline-success" %></td>
                   <td><input type="checkbox" class="checkthis" /></td>
                 </tr>
               </tbody>
             <% end %>
           </table>
-          <%= link_to "Download", "/upload", class: "btn btn-outline-success" %>
-        <% else %>
-          <h4 class="text-center">Document list is empty</h4>
-        <% end %>
-      </div>
+        </div>
+      <%= link_to "Download", "/upload", class: "btn btn-outline-success" %>
+    <% else %>
+      <h4 class="text-center">Document list is empty</h4>
+    <% end %>
   </div>
 </div>
