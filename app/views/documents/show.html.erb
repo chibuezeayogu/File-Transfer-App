@@ -1,0 +1,22 @@
+<div class="container">
+  <div style="margin-top:100px" class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <h5 class="card-header">Title > <%= @document.title %></h5>
+        <div class="card-body">
+          <h5 class="card-title">Description</h5>
+          <p class="card-text"><%= @document.description %></p>
+          <hr />
+          <div class="d-flex justify-content-center">
+            <% if @document.document.previewable? %>
+              <%= image_tag @document.document.preview(resize: "600x600>"), class: "img-fluid" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 25px" class="text-right">
+        <%= link_to "Back", documents_path, class: "btn btn-outline-success" %>
+      </div>
+    </div>
+  </div>
+</div>

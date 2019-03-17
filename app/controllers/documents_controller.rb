@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class DocumentsController < ApplicationController
+  before_action :set_document, only: :show
   def new; end
 
   def index
@@ -18,7 +19,15 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def show; end
+
   private
+
+  def set_document
+    @document = Document.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => error
+    render :file => "#{Rails.root}/public/404.html",  :status => 404
+  end
 
   def document_params
     params.permit(:title, :description, :document)
