@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'destroy', to: 'users#destroy'
 
   resources :documents
+  resources :user_documents, path: 'user/documents'
 end

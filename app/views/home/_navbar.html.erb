@@ -22,8 +22,12 @@
             <%= link_to "Register", "/register", class: "nav-link text-white" %>
           </li>
         <% else %>
-          <li class="nav-item<%= 'active' if current_page?(login_path) %>">
-            <%= link_to "Logout", "/destroy", class: "nav-link text-white" %> 
+          <li class="nav-item dropdown <%= 'active' if current_page?(login_path) %>">
+            <%= link_to "Welcome", "#", class: "nav-link dropdown-toggle text-white", data: { toggle: 'dropdown' } %> 
+              <div class="dropdown-menu">
+                <%= link_to "My Document", "/user/documents", class: "dropdown-item" %> 
+                <%= link_to "Logout", "/destroy", class: "dropdown-item" %> 
+              </div>
           </li>
         <% end %>
       </ul>
