@@ -5,7 +5,7 @@
  File-Transfer-Application is an application that allows user transfer files back and forth from a remote web server. Users get to see their download progress with the help of a progress bar.
 * `Note`: A User must be registered and authenticated before he/she can upload or download file(s).
 
-# Framwork Used
+# Framework Used
 * `Rails`: Rails is a web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.
 
 ## Gem used to handle file upload
